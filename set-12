@@ -1,0 +1,29 @@
+# Website Traffic
+date <- as.Date(c("2023-01-01","2023-01-02","2023-01-03"))
+pageviews <- c(1500,1600,1400)
+ctr <- c(2.3,2.7,2.0)
+
+# 1. Line chart
+plot(date, pageviews, type="o", col="blue",
+     main="Daily Page Views", xlab="Date", ylab="Page Views")
+
+# 2. Bar chart – CTR
+barplot(ctr, names.arg=format(date,"%m-%d"), col="green",
+        main="Click-Through Rates", ylab="CTR (%)")
+
+# 3. Table
+data.frame(Date=date, PageViews=pageviews, CTR=ctr)
+
+
+# Geographic Data
+city <- c("City A","City B","City C")
+population <- c(500000,700000,600000)
+temp <- c(75,68,80)
+elev <- c(1000,800,1200)
+
+# 4. Scatter plot – Temp vs Population
+plot(temp, population, col="red", pch=19,
+     main="Temperature vs Population", xlab="Avg Temp", ylab="Population")
+
+# 5. Table
+data.frame(City=city, Population=population, Temperature=temp, Elevation=elev)
