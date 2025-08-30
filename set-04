@@ -1,0 +1,51 @@
+# Install and load required packages
+if(!require(ggplot2)) install.packages("ggplot2")
+if(!require(dplyr)) install.packages("dplyr")
+
+library(ggplot2)
+library(dplyr)
+
+# Step 1: Create the dataset
+product_data <- data.frame(
+  ProductID = c(1, 2, 3, 4, 5),
+  ProductName = c("Product A", "Product B", "Product C", "Product D", "Product E"),
+  QuantityAvailable = c(250, 175, 300, 200, 220),
+  ProductPrice = c(50, 40, 60, 55, 45) # Added price for scatter plot
+)
+
+# View the dataset
+print(product_data)
+
+# 1. Bar Chart: Quantity of each product
+bar_chart <- ggplot(product_data, aes(x = ProductName, y = QuantityAvailable)) +
+  geom_bar(stat = "identity", fill = "skyblue", color = "black") +
+  labs(title = "Quantity of Each Product in Inventory",
+       x = "Product Name",
+       y = "Quantity Available") +
+  theme_minimal()
+print(bar_chart)
+
+# 2. Stacked Bar Chart: Show quantity of each product by stock category
+# Create stock category based on quantity
+product_data$StockCategory <- ifelse(product_data$QuantityAvailable > 220, "High Stock", "Medium/Low Stock")
+
+stacked_bar <- ggplot(product_data, aes(x = StockCategory, y = QuantityAvailable, fill = ProductName)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Stacked Bar Chart: Quantity by Stock Category",
+       x = "Stock Category",
+       y = "Total Quantity") +
+  theme_minimal()
+print(stacked_bar)
+
+# 3. Scatter Plot: Relationship between product price and quantity
+scatter_plot <- ggplot(product_data, aes(x = ProductPrice, y = QuantityAvailable)) +
+  geom_point(color = "blue", size = 3) +
+  geom_smooth(method = "lm", color = "red", se = FALSE) +
+  labs(title = "Product Price vs Quantity Available",
+       x = "Product Price",
+       y = "Quantity Available") +
+  theme_minimal()
+print(scatter_plot)
+
+# 4. Export CSV for Tableau dashboard
+write.csv(product_data, "product_inventory.csv", row.names = FALSE)
