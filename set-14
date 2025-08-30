@@ -1,0 +1,16 @@
+# Dataset
+product <- c("Product A","Product B","Product C")
+quantity <- c(250,175,300)
+price <- c(20,15,18)
+
+# 1. Bar chart
+barplot(quantity, names.arg=product, col="skyblue",
+        main="Product Inventory", xlab="Product", ylab="Quantity")
+
+# 2. Stacked bar (example categories)
+category <- c("Cat1","Cat2","Cat1")
+table_cat <- table(category, product)
+barplot(table_cat, col=c("pink","lightgreen"), main="Products by Category", legend=TRUE)
+
+# 3. Table
+data.frame(Product=product, Quantity=quantity, Price=price)
