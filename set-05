@@ -1,0 +1,63 @@
+# Install and load required packages
+if(!require(ggplot2)) install.packages("ggplot2")
+if(!require(dplyr)) install.packages("dplyr")
+
+library(ggplot2)
+library(dplyr)
+
+# Step 1: Create the dataset
+website_data <- data.frame(
+  Date = as.Date(c('2023-01-01','2023-01-02','2023-01-03','2023-01-04','2023-01-05')),
+  PageViews = c(1500, 1600, 1400, 1650, 1800),
+  ClickThroughRate = c(2.3, 2.7, 2.0, 2.4, 2.6)
+)
+
+# View the dataset
+print(website_data)
+
+# 1. Line Chart: Trend of daily page views over time
+line_chart <- ggplot(website_data, aes(x = Date, y = PageViews)) +
+  geom_line(color = "blue", size = 1.2) +
+  geom_point(color = "darkblue", size = 3) +
+  labs(title = "Trend of Daily Page Views Over Time",
+       x = "Date",
+       y = "Page Views") +
+  theme_minimal()
+print(line_chart)
+
+# 2. Bar Chart: Top N days with highest click-through rates
+# Sort by CTR in descending order
+top_days <- website_data %>%
+  arrange(desc(ClickThroughRate))
+
+bar_chart <- ggplot(top_days, aes(x = reorder(as.character(Date), -ClickThroughRate), y = ClickThroughRate)) +
+  geom_bar(stat = "identity", fill = "orange", color = "black") +
+  labs(title = "Top Days with Highest Click-Through Rates",
+       x = "Date",
+       y = "Click-Through Rate (%)") +
+  theme_minimal()
+print(bar_chart)
+
+# 3. Stacked Area Chart: Distribution of user interactions (Simulated data)
+# Create extra columns for Likes, Shares, Comments
+set.seed(123)
+interaction_data <- data.frame(
+  Date = website_data$Date,
+  Likes = sample(400:600, 5),
+  Shares = sample(200:400, 5),
+  Comments = sample(100:250, 5)
+)
+
+interaction_data_long <- tidyr::gather(interaction_data, key = "InteractionType", value = "Count", -Date)
+
+stacked_area <- ggplot(interaction_data_long, aes(x = Date, y = Count, fill = InteractionType)) +
+  geom_area(alpha = 0.7) +
+  labs(title = "Distribution of User Interactions Over Time",
+       x = "Date",
+       y = "Interaction Count") +
+  theme_minimal()
+print(stacked_area)
+
+# 4. Export CSV for Tableau Dashboard
+write.csv(website_data, "website_analytics.csv", row.names = FALSE)
+write.csv(interaction_data, "user_interactions.csv", row.names = FALSE)
