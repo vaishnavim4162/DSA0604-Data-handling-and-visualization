@@ -1,0 +1,15 @@
+# Dataset
+category <- c("Electronics","Clothing","Appliances")
+sales <- c(50000,35000,40000)
+
+# 1. Pie chart
+pie(sales, labels=category, col=rainbow(3),
+    main="Sales by Product Category")
+
+# 2. Funnel chart (approximation in Base R → barplot sorted)
+sorted_sales <- sort(sales, decreasing=TRUE)
+barplot(sorted_sales, names.arg=category[order(sales, decreasing=TRUE)],
+        col="lightblue", main="Funnel Representation of Sales")
+
+# 3. Table
+data.frame(Category=category, Sales=sales)
