@@ -1,0 +1,28 @@
+product_data <- data.frame(
+  ProductID = c(1, 2, 3),
+  ProductName = c("Product A", "Product B", "Product C"),
+  QuantityAvailable = c(250, 175, 300),
+  Price = c(20, 15, 18),
+  Category = c("Category 1", "Category 1", "Category 2")
+)
+
+# Q1: Bar chart - Quantity of products
+ggplot(product_data, aes(x = ProductName, y = QuantityAvailable)) +
+  geom_bar(stat = "identity", fill = "darkgreen") +
+  labs(title = "Product Quantity in Inventory",
+       x = "Product",
+       y = "Quantity Available") +
+  theme_minimal()
+
+# Q2: Stacked bar chart - Quantity by category
+ggplot(product_data, aes(x = Category, y = QuantityAvailable, fill = ProductName)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Product Quantities by Category",
+       x = "Category",
+       y = "Quantity Available") +
+  theme_minimal()
+
+# Q3: Table - Inventory data
+kable(product_data,
+      col.names = c("Product ID", "Product Name", "Quantity Available", "Price ($)", "Category"),
+      caption = "Table: Product Inventory Data")
