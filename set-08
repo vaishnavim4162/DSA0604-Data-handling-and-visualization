@@ -1,0 +1,60 @@
+employee_data <- data.frame(
+  EmployeeID = c(1, 2, 3),
+  Department = c("Sales", "HR", "Marketing"),
+  YearsOfService = c(5, 3, 7),
+  PerformanceScore = c(85, 92, 78)
+)
+
+# Q1: Line chart - Performance over time
+ggplot(employee_data, aes(x = YearsOfService, y = PerformanceScore)) +
+  geom_line(aes(group = 1), color = "blue") +
+  geom_point(size = 3, color = "red") +
+  labs(title = "Employee Performance Over Time",
+       x = "Years of Service",
+       y = "Performance Score") +
+  theme_minimal()
+
+# Q2: Bar chart - Department distribution
+ggplot(employee_data, aes(x = Department)) +
+  geom_bar(fill = "skyblue", color = "black") +
+  labs(title = "Employees per Department",
+       x = "Department",
+       y = "Count") +
+  theme_minimal()
+
+# Q3: Table - Performance data
+kable(employee_data,
+      col.names = c("Employee ID", "Department", "Years of Service", "Performance Score"),
+      caption = "Table: Employee Performance Data")
+
+# ------------------------------
+# Set 9: Product Inventory
+# ------------------------------
+product_data <- data.frame(
+  ProductID = c(1, 2, 3),
+  ProductName = c("Product A", "Product B", "Product C"),
+  QuantityAvailable = c(250, 175, 300),
+  Price = c(20, 15, 18),
+  Category = c("Category 1", "Category 1", "Category 2")
+)
+
+# Q1: Bar chart - Quantity of products
+ggplot(product_data, aes(x = ProductName, y = QuantityAvailable)) +
+  geom_bar(stat = "identity", fill = "darkgreen") +
+  labs(title = "Product Quantity in Inventory",
+       x = "Product",
+       y = "Quantity Available") +
+  theme_minimal()
+
+# Q2: Stacked bar chart - Quantity by category
+ggplot(product_data, aes(x = Category, y = QuantityAvailable, fill = ProductName)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Product Quantities by Category",
+       x = "Category",
+       y = "Quantity Available") +
+  theme_minimal()
+
+# Q3: Table - Inventory data
+kable(product_data,
+      col.names = c("Product ID", "Product Name", "Quantity Available", "Price ($)", "Category"),
+      caption = "Table: Product Inventory Data")
