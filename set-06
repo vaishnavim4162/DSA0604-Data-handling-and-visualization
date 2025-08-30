@@ -1,0 +1,62 @@
+# Install and load necessary packages
+if(!require(ggplot2)) install.packages("ggplot2")
+if(!require(dplyr)) install.packages("dplyr")
+if(!require(tidyr)) install.packages("tidyr")
+
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+
+# Step 1: Create the dataset
+sales_data <- data.frame(
+  ProductID = c(1, 2, 3),
+  ProductName = c("Product A", "Product B", "Product C"),
+  January = c(2000, 1500, 1200),
+  February = c(2200, 1800, 1400),
+  March = c(2400, 1600, 1100)
+)
+
+# View dataset
+print(sales_data)
+
+# Step 2: Convert data to long format for visualization
+sales_long <- sales_data %>%
+  gather(key = "Month", value = "Sales", January:March)
+
+# ----------------------------
+# 1. Grouped Bar Chart: Sales of each product for the first quarter
+# ----------------------------
+grouped_bar_chart <- ggplot(sales_long, aes(x = Month, y = Sales, fill = ProductName)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  labs(title = "Monthly Sales of Each Product (Q1)",
+       x = "Month",
+       y = "Sales",
+       fill = "Product") +
+  theme_minimal()
+print(grouped_bar_chart)
+
+# ----------------------------
+# 2. Stacked Area Chart: Overall sales trend for all products over three months
+# ----------------------------
+stacked_area_chart <- ggplot(sales_long, aes(x = Month, y = Sales, fill = ProductName)) +
+  geom_area(alpha = 0.8, position = "stack") +
+  labs(title = "Overall Sales Trend for All Products",
+       x = "Month",
+       y = "Total Sales",
+       fill = "Product") +
+  theme_minimal()
+print(stacked_area_chart)
+
+# ----------------------------
+# 3. Build a Table: Monthly Sales Data
+# ----------------------------
+# Print table in R
+print(sales_data)
+
+# Save table as CSV for Tableau dashboard
+write.csv(sales_data, "product_sales.csv", row.names = FALSE)
+
+# ----------------------------
+# 4. For Tableau Dashboard
+# Export both datasets for interactive visualization
+write.csv(sales_long, "product_sales_long.csv", row.names = FALSE)
