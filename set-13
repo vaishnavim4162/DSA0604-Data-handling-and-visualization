@@ -1,0 +1,16 @@
+# Dataset
+employee <- c(1,2,3)
+department <- c("Sales","HR","Marketing")
+years <- c(5,3,7)
+performance <- c(85,92,78)
+
+# 1. Line chart
+plot(years, performance, type="o", col="blue",
+     main="Employee Performance Trend", xlab="Years of Service", ylab="Performance Score")
+
+# 2. Bar chart – department distribution
+dept_count <- table(department)
+barplot(dept_count, col="orange", main="Employees by Department")
+
+# 3. Table
+data.frame(EmployeeID=employee, Department=department, Years=years, Performance=performance)
