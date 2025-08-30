@@ -1,0 +1,44 @@
+# Install and load required package
+if(!require(ggplot2)) install.packages("ggplot2")
+library(ggplot2)
+
+# Step 1: Create the dataset
+sales_data <- data.frame(
+  Month = c("January", "February", "March", "April", "May"),
+  Sales = c(15000, 18000, 22000, 20000, 23000)
+)
+
+# Step 2: Line Chart - Monthly Sales Trend
+line_chart <- ggplot(sales_data, aes(x = Month, y = Sales, group = 1)) +
+  geom_line(color = "blue", size = 1) +
+  geom_point(size = 3, color = "red") +
+  labs(title = "Monthly Sales Trend",
+       x = "Month",
+       y = "Sales (in $)") +
+  theme_minimal()
+print(line_chart)
+
+# Step 3: Bar Chart - Monthly Sales
+bar_chart <- ggplot(sales_data, aes(x = Month, y = Sales, fill = Month)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Sales per Month",
+       x = "Month",
+       y = "Sales (in $)") +
+  theme_minimal()
+print(bar_chart)
+
+# Step 4: Add Advertising Budget (Assumed Data)
+sales_data$Advertising <- c(2000, 2500, 3000, 2800, 3200)
+
+# Step 5: Scatter Plot - Advertising Budget vs Sales
+scatter_plot <- ggplot(sales_data, aes(x = Advertising, y = Sales)) +
+  geom_point(size = 3, color = "purple") +
+  geom_smooth(method = "lm", se = FALSE, color = "blue") +
+  labs(title = "Relationship between Advertising Budget and Sales",
+       x = "Advertising Budget (in $)",
+       y = "Sales (in $)") +
+  theme_minimal()
+print(scatter_plot)
+
+# Step 6: Export CSV for Tableau Dashboard
+write.csv(sales_data, "monthly_sales.csv", row.names = FALSE)
