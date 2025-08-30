@@ -1,0 +1,18 @@
+# Dataset
+survey_id <- c(1,2,3)
+q1 <- c("A","B","C")
+q2 <- c("B","A","A")
+q3 <- c("C","D","B")
+
+# 1. Grouped bar chart – Q1
+q1_count <- table(q1)
+barplot(q1_count, beside=TRUE, col="lightblue",
+        main="Q1 Responses", xlab="Answer", ylab="Count")
+
+# 2. Stacked bar chart – All responses
+responses <- rbind(table(q1), table(q2), table(q3))
+barplot(responses, beside=FALSE, col=rainbow(3),
+        main="All Survey Responses", legend=TRUE)
+
+# 3. Table
+data.frame(SurveyID=survey_id, Q1=q1, Q2=q2, Q3=q3)
