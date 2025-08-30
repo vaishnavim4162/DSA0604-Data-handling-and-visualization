@@ -1,0 +1,33 @@
+# Load required library
+library(ggplot2)
+
+# Dataset
+customer_data <- data.frame(
+  CustomerID = c(1, 2, 3),
+  Age = c(28, 35, 42),
+  Gender = c("Female", "Male", "Female"),
+  Income = c(50000, 60000, 75000)
+)
+
+# Bar chart: Age distribution
+ggplot(customer_data, aes(x = factor(CustomerID), y = Age)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  labs(title = "Customer Age Distribution", x = "Customer ID", y = "Age") +
+  theme_minimal()
+# Pie chart requires counts
+gender_counts <- table(customer_data$Gender)
+gender_df <- as.data.frame(gender_counts)
+colnames(gender_df) <- c("Gender", "Count")
+# Pie chart
+ggplot(gender_df, aes(x = "", y = Count, fill = Gender)) +
+  geom_bar(stat = "identity", width = 1) +
+  coord_polar("y") +
+  labs(title = "Gender Distribution") +
+  theme_void()
+  # Using knitr for table
+if (!require(knitr)) install.packages("knitr")
+library(knitr)
+kable(customer_data,
+      col.names = c("Customer ID", "Age", "Gender", "Income ($)"),
+      caption = "Table: Customer Demographic Information")
+
